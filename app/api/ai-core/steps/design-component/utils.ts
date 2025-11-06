@@ -16,6 +16,7 @@ export interface ComponentDesign {
   retrievedAugmentationContent?: string
 }
 
+// 生成系统提示词
 const buildSystemPrompt = (rules: WorkflowContext["query"]["rules"]) => {
   const componentsDescription = getPrivateDocsDescription(rules)
   const hasComponentLibraries = !!componentsDescription
@@ -48,7 +49,7 @@ const buildSystemPrompt = (rules: WorkflowContext["query"]["rules"]) => {
     },
     withoutLibraries: {
       goal: "Extract component name and description information needed to develop business components from business requirements and design drafts.",
-      constraints: `- Extract the component name and description information from the business requirements and design drafts. 
+      constraints: `- Extract the component name and description information from the business requirements and design drafts.
 - Analyze the design draft to understand the business functionality needed.
 
 Please note: You should not provide example code and any other text in your response, only provide XML response.`,
@@ -74,17 +75,17 @@ Please note: You should not provide example code and any other text in your resp
   // build the final prompt
   return `
     # You are a senior frontend engineer who excels at developing business components.
-    
+
     ## Goal
     ${parts.goal}
-    
+
     ## Constraints
     ${parts.constraints}
-    
+
     ## Response Format
     You must respond with an XML structure in the following format:
     ${parts.responseFormat}
-    
+
     ## Workflow
     ${workflowSteps}
   `
@@ -185,11 +186,14 @@ export async function generateComponentDesign(
     library: [],
   }
 
+  // 系统提示词（关键词：系统）
   const systemPrompt = buildSystemPrompt(req.query.rules)
 
   console.log("design-component systemPrompt:", systemPrompt)
+  // 用户提示词 和 assistant提示词
   const messages = [
     ...buildCurrentComponentMessage(req.query.component),
+    // 针对用户当前的prompt来拼接成用户提示词
     ...buildUserMessage(req.query.prompt),
   ]
 

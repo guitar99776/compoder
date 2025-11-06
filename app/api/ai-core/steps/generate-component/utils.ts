@@ -82,12 +82,17 @@ export const buildSystemPrompt = (
   retrievedAugmentationContent?: string,
 ): string => {
   // Generate each section
+  // 输出定义
   const outputSpecification = generateOutputSpecification(rules)
+  // 样式定义
   const styleSpecification = generateStyleSpecification(rules)
+  // 获取使用到的开源组件
   const openSourceComponents = generateOpenSourceComponents(rules)
+  // 获取私有组件
   const privateComponents = generatePrivateComponents(
     retrievedAugmentationContent,
   )
+  // 额外规则
   const additionalRules = generateAdditionalRules(rules)
 
   // Check if component usage guidelines exist

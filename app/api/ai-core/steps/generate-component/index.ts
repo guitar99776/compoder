@@ -12,6 +12,7 @@ export const generateComponent = async (
 
   let completion = ""
 
+  // 系统提示词
   const systemPrompt = buildSystemPrompt(
     context.query.rules,
     context.state?.designTask?.retrievedAugmentationContent,
@@ -19,6 +20,7 @@ export const generateComponent = async (
 
   console.log("generate-component systemPrompt:", systemPrompt)
 
+  // 用户提示词
   const messages = generateComponentMessage(context)
 
   const stream = await streamText({

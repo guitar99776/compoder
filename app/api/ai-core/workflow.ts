@@ -10,6 +10,7 @@ import { InitialWorkflowContext, WorkflowContext } from "./type"
 
 type Workflow = (context: InitialWorkflowContext) => Promise<WorkflowContext>
 
+// pipe 把上一步步骤的结果给到下一步
 export const updateComponentWorkflow = pipe<
   InitialWorkflowContext,
   WorkflowContext

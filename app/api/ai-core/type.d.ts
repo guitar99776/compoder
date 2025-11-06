@@ -23,11 +23,13 @@ type WorkflowState = {
   designTask: {
     componentName: string
     componentDescription: string
+    // 组件库描述
     library: Array<{
       name: string
       components: string[]
       description: string
     }>
+    // 召回的知识
     retrievedAugmentationContent?: string
   }
   generatedCode: string
@@ -40,6 +42,7 @@ export type InitialWorkflowContext = {
     close: () => void
   }
   query: WorkflowQuery
+  // 后续步骤需要挂载上的额外信息
   state?: never
 }
 
@@ -54,11 +57,13 @@ export type DesignProcessingWorkflowContext = {
     designTask: {
       componentName: string
       componentDescription: string
+      // 组件库描述
       library: Array<{
         name: string
         components: string[]
         description: string
       }>
+      // 召回的知识
       retrievedAugmentationContent?: string
     }
   }
@@ -82,6 +87,7 @@ export type GenerateProcessingWorkflowContext = {
       }>
       retrievedAugmentationContent?: string
     }
+    // 最终生成的代码
     generatedCode: string
   }
 }
